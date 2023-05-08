@@ -4,12 +4,42 @@
 #Cinthya Marín
 #2023
 
-file.choose()
+#file.choose()
 #Nota para el profesor: Utilizar su dirección generada por el file.choose del punto anterior()
 baseDatosCelulas=read.csv("[DIRECCION DEL ARCHIVO]")
-View(baseDatosCelulas$ID_CELULA)
-names(baseDatosCelulas)
-data.frame(baseDatosCelulas)
+
+
+#Calculo volumen promedio
+
+calcula.radio.promedio <- function(radio_X, radio_Y, radio_Z){
+  radio.promedio <- mean(c(radio_X, radio_Y, radio_Z))
+  
+  return(radio.promedio)
+  
+}
+
+calcula.volumen.cel <- function(radio){
+  volumen.cel <- (4/3) * pi * radio^3
+  return(volumen.cel)
+}
+
+promedio.radios <- function() {
+  for (i in 1:nrow(baseDatosCelulas)){
+    radioX <- baseDatosCelulas[i,"DIM_RAD_NM_X"]
+    radioY <- baseDatosCelulas[i,"DIM_RAD_NM_Y"]
+    radioZ <- baseDatosCelulas[i,"DIM_RAD_NM_Z"]
+    radioPromedio <- calcula.radio.promedio(radioX, radioY, radioZ)
+    volumenPromedio <- calcula.volumen.cel(radioPromedio)
+    baseDatosCelulas[i,"volumenPromedio"] <- volumenPromedio
+  }
+  return(baseDatosCelulas)
+}
+
+baseDatosCelulas <- promedio.radios()
+
+
+
+
 
 #PREGUNTA 6
 
